@@ -2,13 +2,18 @@
 # https://github.com/half0wl/toolkit                                         #
 # MIT License - (c) 2025 Ray Chen <meow@ray.cat>                             #
 #                                                                            #
-# _lib.sh - A set of utility functions for shell scripts.                     #
-# To use this, run `source _lib.sh` in a shell script.                        #
+# _lib.sh - A set of utility functions for shell scripts. To use this in a   #
+# shell script:                                                              #
+#                                                                            #
+#   ```                                                                      #
+#   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"               #
+#   source "${SCRIPT_DIR}/_lib.sh"                                           #
+#   ```                                                                      #
 #                                                                            #
 # Available Functions:                                                       #
 #                                                                            #
 #   write_info(message)      - Print informational message                   #
-#   write_success(message)   - Print successful message                      #
+#   write_ok(message)        - Print successful message                      #
 #   write_warning(message)   - Print warning message                         #
 #   write_error(message)     - Print error message                           #
 #   write_busy(message)      - Start progress spinner with message           #
@@ -113,7 +118,7 @@ function write_info() {
   printf '%b%s%b\n' "${CYAN_R}[ I ] " "${1}" "${NC}"
 }
 
-# write_success() prints a successful message in green.
+# write_ok() prints a successful message in green.
 #
 # Arguments:
 #
@@ -121,8 +126,8 @@ function write_info() {
 #
 # Usage:
 #
-#   write_success "This is an ok message"
-function write_success() {
+#   write_ok "This is an ok message"
+function write_ok() {
   printf '%b%s%b\n' "${GREEN_R}[ ✔ ] " "${1}" "${NC}"
 }
 
