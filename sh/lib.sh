@@ -2,8 +2,8 @@
 # https://github.com/half0wl/toolkit                                         #
 # MIT License - (c) 2025 Ray Chen <meow@ray.cat>                             #
 #                                                                            #
-# lib.sh - A set of utility functions for shell scripts.                     #
-# To use this, run `source lib.sh` in a shell script.                        #
+# _lib.sh - A set of utility functions for shell scripts.                     #
+# To use this, run `source _lib.sh` in a shell script.                        #
 #                                                                            #
 # Available Functions:                                                       #
 #                                                                            #
