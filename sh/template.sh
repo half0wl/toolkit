@@ -1,7 +1,7 @@
 #!/bin/bash
 # ========================================================================== #
 # https://github.com/half0wl/toolkit                                         #
-# MIT License - (c) 2025 Ray Chen <meow@ray.cat>                             #
+# MIT License (c) 2025 Ray Chen <meow@ray.cat>                               #
 #                                                                            #
 # template.sh - A starting template for shell scripts.                       #
 # ========================================================================== #
