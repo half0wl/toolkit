@@ -3,7 +3,7 @@
 # MIT License - (c) 2025 Ray Chen <meow@ray.cat>                             #
 #                                                                            #
 # lib.sh - A set of utility functions for shell scripts.                     #
-# To use this, run `source lib.sh` in a shell script.                        #                #
+# To use this, run `source lib.sh` in a shell script.                        #
 #                                                                            #
 # Available Functions:                                                       #
 #                                                                            #
