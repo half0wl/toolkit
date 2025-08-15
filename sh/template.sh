@@ -1,131 +1,79 @@
 #!/bin/bash
-# Starting template for shell scripts.
-set -e
+# ========================================================================== #
+# https://github.com/half0wl/toolkit                                         #
+# MIT License - (c) 2025 Ray Chen <meow@ray.cat>                             #
+#                                                                            #
+# template.sh - A starting template for shell scripts.                       #
+# ========================================================================== #
+set -eou pipefail
 
-# ANSI Colors
-GRAY_R='\033[0;90m'
-GREEN_R='\033[0;32m'
-GREEN_B='\033[1;92m'
-RED_R='\033[0;31m'
-RED_B='\033[1;91m'
-YELLOW_R='\033[0;33m'
-YELLOW_B='\033[1;93m'
-PURPLE_R='\033[0;35m'
-PURPLE_B='\033[1;95m'
-WHITE_R='\033[0;37m'
-WHITE_B='\033[1;97m'
-NC='\033[0m'
-
-# Colored prints
-echo_grayr() {
-  echo -e "${GRAY_R}$1${NC}"
-}
-
-echo_yellowr() {
-  echo -e "${YELLOW_R}$1${NC}"
-}
-
-echo_purpler() {
-  echo -e "${PURPLE_R}$1${NC}"
-}
-
-echo_greenr() {
-  echo -e "${GREEN_R}$1${NC}"
-}
-
-echo_redr() {
-  echo -e "${RED_R}$1${NC}" >&2
-}
-
-# confirm() shows a prompt to the user and returns true if the user types
-# 'y' or 'Y'. Returns false otherwise.
-#
-# Usage:
-#
-#   if confirm "Continue?"; then
-#     # yes
-#   else
-#    # no
-#    exit 1
-#   fi
-confirm() {
-  local prompt="$1"
-  local default="$2"
-  default=${default:-"N"}
-  if [ "$default" = "Y" ]; then
-    echo ""
-    prompt="$prompt [Y/n]: "
-    echo ""
-  else
-    echo ""
-    prompt="$prompt [y/N]: "
-    echo ""
-  fi
-  read -r -p "$prompt" response
-  if [ -z "$response" ]; then
-    response=$default
-  fi
-  if [[ "$response" =~ ^[Yy]$ ]]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-# is_dry_run() checks if the --dry-run flag is present in the arguments.
-# Returns true if the flag is present, false otherwise.
-#
-# Usage:
-#
-#   DRY_RUN=$(is_dry_run "$@")
-#   if [ "$DRY_RUN" = "true" ]; then
-#       echo "dryrun"
-#   else
-#       echo "normal"
-#   fi
-is_dry_run() {
-  local dry_run=false
-  for arg in "$@"; do
-    case $arg in
-    --dry-run)
-      dry_run=true
-      break
-      ;;
-    esac
-  done
-  echo "$dry_run"
-}
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/lib.sh"
 
 function print_usage() {
   echo "Usage: $0 <command> [options]"
   echo ""
   echo "Commands:"
-  echo "  hello-name <name>   Print a personalized greeting"
-  echo "  hello-world         Print a generic greeting"
+  echo "  help                   Print usage information"
+  echo "  usage                  Print usage information"
+  echo "  hello-name <name>      Print a personalized greeting"
+  echo "  hello-world            Print a generic greeting"
+  echo "  print-sample-messages  Print sample messages"
   echo ""
   echo "Options:"
-  echo "  --dry-run           Run the script in dry-run mode"
+  echo "  --dry-run              Run the script in dry-run mode"
 }
 
 function hello_world() {
-  echo_purpler "Hello world!"
+  write_info "Hello world!"
 }
 
 function hello_name() {
-  echo_purpler "Hello $1"
+  local name="${1:-World}"
+  write_info "Hello $name"
 }
+
+function print_sample_messages() {
+  write_busy "Printing samples messages"
+  sleep 1
+  write_done "This is a sample done message"
+  write_info "This is an informational message"
+  sleep 0.5
+  write_success "This is a successful message"
+  sleep 0.5
+  write_warning "This is a warning message"
+  sleep 0.5
+  write_error "This is an error message"
+  sleep 0.5
+}
+
+if [ $# -eq 0 ]; then
+  print_usage
+  exit 0
+fi
 
 COMMAND=$1
 shift 1
+
 case $COMMAND in
+"help")
+  print_usage
+  ;;
+"usage")
+  print_usage
+  ;;
 "hello-name")
   hello_name "$@"
   ;;
 "hello-world")
   hello_world
   ;;
+"print-sample-messages")
+  print_sample_messages
+  ;;
 *)
-  echo_redr "Unknown command: $COMMAND"
+  write_error "Unknown command: $COMMAND"
   print_usage
+  exit 1
   ;;
 esac
